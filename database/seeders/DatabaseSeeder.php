@@ -4,16 +4,17 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Database\Seeders\CategorySeed;
+use Database\Seeders\UserSeed;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     *
-     * @return void
-     */
     public function run()
     {
+		$this->call([
+			UserSeed::class,
+			CategorySeed::class,   // Llamado de los seeders para proceder a su ejecución
+		]);
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([

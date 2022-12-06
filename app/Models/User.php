@@ -52,11 +52,13 @@ class User extends Authenticatable
 	}
 
 	// ------------------------------ Relations -------------------------------------
+	// Prestamos que adquirió el cliente
 	public function CustomerLends()
 	{
 		return $this->hasMany(Lend::class, 'customer_user_id', 'id');
 	}
 
+	// Prestamos que hizo el bibliotecario
 	public function OwnerLends()
 	{
 		return $this->hasMany(Lend::class, 'owner_user_id', 'id');

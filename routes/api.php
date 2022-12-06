@@ -1,19 +1,18 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
+// En esta ruta vamos a llamar a un controlador.
+// Grupo de rutas para el prefijo users. Todas las rutas que esten en users, siempre van a tener a users y a lo que se asigne dentro del grupo de rutas
+// Si este es el controlador de users, se pone el controlador de users en este request.
+Route::group(['prefix' => 'Users', 'controller' => UserController::class], function () {
+	// Todas las rutas que se pongan acá dentro, irán al UserController.
+	// Se crea la ruta que acceda a la función getAllUsers()
+	// Se crea la ruta y se pone la función que se mostrará en esta ruta
+	Route::get('/GetAllUsers', 'getAllUsers');		// GET -> Traer data
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+	Route::post('/GetAllUsers', 'getAllUsers');		// POST -> Crear data
+	Route::put('/GetAllUsers', 'getAllUsers');		// PUT -> Actualizar data
+	Route::delete('/GetAllUsers', 'getAllUsers');	// DELETE -> Eliminar data
 });

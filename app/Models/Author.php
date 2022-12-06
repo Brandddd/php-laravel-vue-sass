@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use app\Models\Book;
 
 class Author extends Model
 {
@@ -13,4 +14,13 @@ class Author extends Model
 		'name',
 		'biography',
 	];
+
+	// Lleva Books porque una categoria tiene muchos libros (Ver diagrama)
+	public function Books()
+	{
+		// Tiene muchos hasMany(Book::class <- Se le indica la clase Book en este caso para así crear la relación 1 a muchos.
+		return $this->hasMany(Book::class, 'author_id', 'id');
+		// llave foránea foreign_key -> author_id que proviene de Books
+		// lave local local_key -> id que proviene de Authors
+	}
 }

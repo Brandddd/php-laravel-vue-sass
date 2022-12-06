@@ -24,15 +24,34 @@ class User extends Authenticatable
         'password',
     ];
 
+	// El full_name en snake_case hace referencia al CamelCase del accessor, GetFullNameAttributes. Asi se muestra siempre por cada consulta.
+	protected $appends = ['full_name'];
+
+	// Ocultar datos a la hora de consultar
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    //protected $casts = [
-    //    'email_verified_at' => 'datetime',
-    //];
+	// Castear y modificar los datos a la hora de consutar
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d',   // 2022-05-06. Por base datos normal mostraría mucha información, gracias a la casteada, se puede modificar la forma del formato en que llega.
+        'updated_at' => 'datetime:Y-m-d',
+    ];
 
+	// Accessor, solo se ejecuta cuando se hace una consulta
+	public function getFullNameAttribute()
+	{
+		return "{$this->name} {$this->last_name}";
+	}
+
+	// Mutator, solo se ejecuta en create o update.  $value -> valor del atributo, en este caso sería el password.
+	public function setPasswordAttribute($value)
+	{
+		$this->attributes['password'] = bcrypt($value);  // Coge el atributo password, y lo encripta con la función bcrypt.
+	}
+
+	// ------------------------------ Relations -------------------------------------
 	public function CustomerLends()
 	{
 		return $this->hasMany(Lend::class, 'customer_user_id', 'id');

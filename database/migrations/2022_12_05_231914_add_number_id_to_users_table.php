@@ -11,7 +11,7 @@ return new class extends Migration
     {
 		Schema::table('users', function (Blueprint $table) {
 			// Se pone nullable(), para que los usuarios que no tengan este valor en el campo, lo asigne como null, para evitar conflictos errores o un default('texto_default') para asignar valor especifico
-			$table->string('number_id')->after('id')->default('no_value');  // aquellos numeros que no se sumen, se comportan como un str / after('id') para que se ubique despues de algun atributo, en este caso id
+			$table->string('number_id')->after('id')->nullable();  // aquellos numeros que no se sumen, se comportan como un str / after('id') para que se ubique despues de algun atributo, en este caso id
         });
     }
 

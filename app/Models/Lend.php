@@ -7,5 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Lend extends Model
 {
-    use HasFactory;
+	use HasFactory;
+
+	protected $fillable = [
+		'owner_user_id',
+		'customer_user_id',
+		'book_id',
+		'date_out',
+		'date_in',
+		'status',
+	];
 }

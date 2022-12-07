@@ -19,8 +19,8 @@ class DatabaseSeeder extends Seeder
 			CategorySeed::class,   // Llamado de los seeders para proceder a su ejecución
 		]);
 
-		User::factory(100)->create();    // Del factory User, creeme 100 usuarios
-		Author::factory(100)->create();    // Del factory Author, creeme 100 usuarios además de crear automaticamente 8 libros por autor.
+		User::factory(10)->create();    // Del factory User, creeme 100 usuarios
+		Author::factory(10)->create();    // Del factory Author, creeme 100 usuarios además de crear automaticamente 8 libros por autor.
 
     }
 }

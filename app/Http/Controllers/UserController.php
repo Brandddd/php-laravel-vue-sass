@@ -48,6 +48,6 @@ class UserController extends Controller
 	public function deleteUser(User $user)
 	{
 		$user->delete();
-		return response()->json([], 204); // 204 indica que se realizo la operacion con exito
+		return response()->json([], 204); // 204 indica que se realizo la operacion con exito.
 	}
 }

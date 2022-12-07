@@ -11,8 +11,17 @@ Route::group(['prefix' => 'Users', 'controller' => UserController::class], funct
 	// Se crea la ruta que acceda a la función getAllUsers()
 	// Se crea la ruta y se pone la función que se mostrará en esta ruta
 	Route::get('/GetAllUsers', 'getAllUsers');		// GET -> Traer data
+	// Para traer un usuario, la variable que se envia 'user' debe ser igual a la que le llega a la funcion en UserController en este caso $user.
+	Route::get('/GetAnUser/{user}', 'getAnUser');		// GET -> Traer data
 
-	Route::post('/GetAllUsers', 'getAllUsers');		// POST -> Crear data
-	Route::put('/GetAllUsers', 'getAllUsers');		// PUT -> Actualizar data
-	Route::delete('/GetAllUsers', 'getAllUsers');	// DELETE -> Eliminar data
+	// Ruta para crear un usuario
+	Route::post('/CreateUser', 'createUser');		// POST -> Crear data
+
+	// Ruta para actualizar un usuario o editarlo.
+	// Se asigna la variable user para trabajar sobre ese usuario en especifico.
+	Route::put('/UpdateUser/{user}', 'updateUser');		// PUT -> Actualizar data
+
+	// Ruta para eliminar un usuario de la base de datos.
+	// Se asigna la variable user para borrar ese usuario en especifico.
+	Route::delete('/DeleteUser/{user}', 'deleteUser');	// DELETE -> Eliminar data
 });

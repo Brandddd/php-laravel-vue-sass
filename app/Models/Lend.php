@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use app\Models\Book;
 use app\models\User;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Lend extends Model
 {
-	use HasFactory;
+	use HasFactory, SoftDeletes;
 
 	protected $fillable = [
 		'owner_user_id',

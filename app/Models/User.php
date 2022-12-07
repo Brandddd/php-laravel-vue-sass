@@ -8,10 +8,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use app\Models\Lend;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
 	protected $table = 'users';
 
@@ -25,6 +26,7 @@ class User extends Authenticatable
     ];
 
 	// El full_name en snake_case hace referencia al CamelCase del accessor, GetFullNameAttributes. Asi se muestra siempre por cada consulta.
+	// El $append llama a los accessors.
 	protected $appends = ['full_name'];
 
 	// Ocultar datos a la hora de consultar
@@ -33,7 +35,7 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-	// Castear y modificar los datos a la hora de consutar
+	// Castear y modificar los datos a la hora de consutar, se pueden hacer cast para boolean y para jsons.
     protected $casts = [
         'created_at' => 'datetime:Y-m-d',   // 2022-05-06. Por base datos normal mostraría mucha información, gracias a la casteada, se puede modificar la forma del formato en que llega.
         'updated_at' => 'datetime:Y-m-d',

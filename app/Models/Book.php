@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use app\Models\Category;
 use app\Models\Author;
 use app\Models\Lend;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Book extends Model
 {
-	use HasFactory;
+	use HasFactory, SoftDeletes;
 
 	protected $fillable = [
 		'category_id',

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LendController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,6 +14,10 @@ Route::group(['prefix' => 'Users', 'controller' => UserController::class], funct
 	Route::get('/GetAllUsers', 'getAllUsers');		// GET -> Traer data
 	// Para traer un usuario, la variable que se envia 'user' debe ser igual a la que le llega a la funcion en UserController en este caso $user.
 	Route::get('/GetAnUser/{user}', 'getAnUser');		// GET -> Traer data
+	// ! Traer todos los prestamos de libros a los usuarios. (Error 500)
+	Route::get('/GetAllLendsByUser/{user}', 'getAllLendsByUser');
+	// ! Traer todos los usuarios con libros prestados, (Error 500)
+	Route::get('/GetAllUsersWithLends', 'getAllUsersWithLends');
 
 	// Ruta para crear un usuario
 	Route::post('/CreateUser', 'createUser');		// POST -> Crear data
@@ -24,4 +29,8 @@ Route::group(['prefix' => 'Users', 'controller' => UserController::class], funct
 	// Ruta para eliminar un usuario de la base de datos.
 	// Se asigna la variable user para borrar ese usuario en especifico.
 	Route::delete('/DeleteUser/{user}', 'deleteUser');	// DELETE -> Eliminar data
+});
+
+Route::group(['prefix' => 'Lends', 'controller' => LendController::class], function () {
+	Route::post('/CreateLend', 'createLend');
 });

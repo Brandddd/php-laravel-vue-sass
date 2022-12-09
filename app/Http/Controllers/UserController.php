@@ -18,6 +18,26 @@ class UserController extends Controller
 		return response()->json(['users' => $users], 200);
 	}
 
+	//--------------------- Consultas --------------------------
+	public function getAllUsersWithLends()
+	{
+		// With -> todos los usuarios con prestamos
+		// Con el With -> Has, solo trae los usuarios que tengan prestamos.
+		$users = User::with('CustomerLends.Book')->has('CustomerLends.Book')->get();
+		return response()->json(['users' => $users], 200);
+	}
+
+	// Consultar usuarios con libros prestados
+	public function getAllLendsByUser(User $user)
+	{
+		//Debugging
+		//ddd('Debugging');
+		// CustomerLends viene de la relación en los Users.php la cual nos muestra los prestamos que adquirió el cliente además de traer sus respectivas relaciones
+		$customerLends = $user->load('CustomerLends.Book.Category', 'CustomerLends.Book.Author')->CustomerLends; // Load me trae informacion de un objeto ya existente. en este cao el usuario al estar en memoria, para cargar mas informacion al usuario es Load()
+		// La informacion que se pasa a javascript o de una api, el nombre de las variables debe ir en snake_case
+		return response()->json(['customer_lends' => $customerLends], 200);
+	}
+
 	// Funcion de consulta a base de datos para obtener solo un usuario. Se le pasa el modelo y la variable a buscar en el modelo. Metodo magico de laravel. Se busca a través del ID.
 	public function getAnUser(User $user)
 	{

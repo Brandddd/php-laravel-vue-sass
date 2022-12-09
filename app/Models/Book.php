@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use app\Models\Category;
-use app\Models\Author;
-use app\Models\Lend;
+use App\Models\Category;
+use App\Models\Author;
+use App\Models\Lend;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Book extends Model

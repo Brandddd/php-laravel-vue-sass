@@ -3,11 +3,11 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Lend;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use app\Models\Lend;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
@@ -57,6 +57,7 @@ class User extends Authenticatable
 	// Prestamos que adquirió el cliente
 	public function CustomerLends()
 	{
+		//ddd('Estoy en customerLends');
 		return $this->hasMany(Lend::class, 'customer_user_id', 'id');
 	}
 

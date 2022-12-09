@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
+use App\Models\Book;
+use App\models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use app\Models\Book;
-use app\models\User;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Model;
 
 class Lend extends Model
 {
@@ -21,10 +21,10 @@ class Lend extends Model
 		'status',
 	];
 
-	// Cada prestamo se le hace a un libro. 1 a 1
-	public function Book()
+	// Cliente que registro el prestamo
+	public function Customer()
 	{
-		return $this->belongsTo(Book::class, 'book_id', 'id');
+		return $this->belongsTo(User::class, 'customer_user_id', 'id');
 	}
 
 	// Propietario
@@ -33,9 +33,9 @@ class Lend extends Model
 		return $this->belongsTo(User::class, 'owner_user_id', 'id');
 	}
 
-	// Cliente que registro el prestamo
-	public function Customer()
+	// Cada prestamo se le hace a un libro. 1 a 1
+	public function Book()
 	{
-		return $this->belongsTo(User::class, 'customer_user_id', 'id');
+		return $this->belongsTo(Book::class, 'book_id', 'id');
 	}
 }

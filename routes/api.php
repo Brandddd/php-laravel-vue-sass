@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\LendController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +32,15 @@ Route::group(['prefix' => 'Users', 'controller' => UserController::class], funct
 	Route::delete('/DeleteUser/{user}', 'deleteUser');	// DELETE -> Eliminar data
 });
 
+// -------------------------------- Rutas para Lend ----------------------------------------------
 Route::group(['prefix' => 'Lends', 'controller' => LendController::class], function () {
 	Route::post('/CreateLend', 'createLend');
+});
+
+// -------------------------------- Rutas para Book ----------------------------------------------
+Route::group(['prefix' => 'Books', 'controller' => BookController::class], function () {
+	Route::post('/CreateBook', 'createBook'); // Create
+	Route::get('/GetAllBooks', 'getAllBooks');  // Read
+	Route::put('/UpdateBook/{book}', 'updateBook'); // Update
+	Route::delete('/DeleteBook/{book}', 'deleteBook'); // Delete
 });

@@ -14,9 +14,9 @@ Route::group(['prefix' => 'Users', 'controller' => UserController::class], funct
 	Route::get('/GetAllUsers', 'getAllUsers');		// GET -> Traer data
 	// Para traer un usuario, la variable que se envia 'user' debe ser igual a la que le llega a la funcion en UserController en este caso $user.
 	Route::get('/GetAnUser/{user}', 'getAnUser');		// GET -> Traer data
-	// ! Traer todos los prestamos de libros a los usuarios. (Error 500)
+	// Traer todos los prestamos de libros a los usuarios
 	Route::get('/GetAllLendsByUser/{user}', 'getAllLendsByUser');
-	// ! Traer todos los usuarios con libros prestados, (Error 500)
+	// Traer todos los usuarios con libros prestados
 	Route::get('/GetAllUsersWithLends', 'getAllUsersWithLends');
 
 	// Ruta para crear un usuario

@@ -24,7 +24,7 @@ class AuthorFactory extends Factory
 	{
 		// Después de crear este factory, se creará 8 libros al author recién creado.
 		return $this->afterCreating(function (Author $author) {
-			Book::factory(8)->authorId($author)->create(); // authorId es una función que lleva facotry Book.
+			Book::factory(2)->authorId($author)->create(); // authorId es una función que lleva facotry Book.
 		});
 	}
 }

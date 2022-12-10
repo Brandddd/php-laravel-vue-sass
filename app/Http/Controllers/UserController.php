@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\User\CreateUserRequest;
+use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -46,7 +48,7 @@ class UserController extends Controller
 
 	// Creando un usuario.
 	// Para obtener el request se usa la funcion Request $request, que genera todos los datos del Request hecho desde el metodo post y los pasa a $request ya formateado.
-	public function createUser(Request $request)
+	public function createUser(CreateUserRequest $request)
 	{
 		// Creación del usuario: Le pasamos el request al modelo User, los cuales se encajan en el fillable de User.php y se almacen en la variable $user.
 		$user = new User($request->all());
@@ -58,7 +60,7 @@ class UserController extends Controller
 
 	// Actualizando un Usuario.
 	// Se trae el usuario $user de la base de datos, y se trae la data del request
-	public function updateUser(User $user, Request $request)
+	public function updateUser(User $user, UpdateUserRequest $request)
 	{
 		$user->update($request->all()); // A este usuario se le actualiza toda la data enviada
 		return response()->json(['user' => $user->refresh()], 201); // refresh() refrescar data del usuario, ya que el metodo PUT no esta pensado para mostrar data.

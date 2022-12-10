@@ -35,6 +35,7 @@ Route::group(['prefix' => 'Users', 'controller' => UserController::class], funct
 // -------------------------------- Rutas para Lend ----------------------------------------------
 Route::group(['prefix' => 'Lends', 'controller' => LendController::class], function () {
 	Route::post('/CreateLend', 'createLend');
+	Route::put('/UpdateLend/{lend}', 'updateLend');
 });
 
 // -------------------------------- Rutas para Book ----------------------------------------------

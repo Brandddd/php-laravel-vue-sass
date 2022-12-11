@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Book\CreateBookRequest;
+use App\Http\Requests\Book\UpdateBookRequest;
 use App\Models\Book;
 use Illuminate\Http\Request;
 
@@ -9,7 +11,7 @@ class BookController extends Controller
 {
 
 	//Create
-	public function createBook(Request $request)
+	public function createBook(CreateBookRequest $request)
 	{
 		$book = new Book($request->all());
 		$book->save();
@@ -24,7 +26,7 @@ class BookController extends Controller
 	}
 
 	//update
-	public function updateBook(Book $book, Request $request)
+	public function updateBook(Book $book, UpdateBookRequest $request)
 	{
 		$book->update($request->all());
 		return response()->json(['book' => $book->refresh()], 201);

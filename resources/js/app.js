@@ -5,7 +5,7 @@ import { createApp } from 'vue'
 import ExampleComponent from './components/ExampleComponent.vue' // Forma de importar componentes
 
 const app = createApp({
-	component: {
+	components: {
 		ExampleComponent
 	}
 })

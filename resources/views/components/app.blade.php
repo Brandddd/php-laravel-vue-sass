@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}"> {{-- - token de laravel para verificar usuarios- --}}
 
-	{{-- Titulo dinámico que se pasa desde una vista --}}
+    {{-- Titulo dinámico que se pasa desde una vista --}}
     <title>{{ $title ?? 'Biblioteca' }}</title> {{-- - Nombre de la aplicación - --}}
 
     <!-- Fonts -->
@@ -27,6 +27,11 @@
 
     {{-- - Content - --}}
     <main id="app">
+        <div class="container mt-5">
+            {{-- Se hace el llamado en la app principal, para poder hacer uso de ellas en todas las vistas --}}
+            <x-alerts />
+        </div>
+
         {{ $slot }}
     </main>
 </body>

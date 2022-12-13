@@ -8,6 +8,13 @@ use App\Models\Book;
 
 class BookController extends Controller
 {
+	// Mostrar libros
+	public function showBooks()
+	{
+		// Retornando una vista que va para la carpeta books -> index
+		return view('books.index');
+	}
+
 	// Mostrar home con libros
 	public function showHomeWithBooks()
 	{

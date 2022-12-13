@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\User\CreateUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 // En los controladores va TODA la lógica
 class UserController extends Controller
@@ -21,6 +22,12 @@ class UserController extends Controller
 	public function showCreateUser()
 	{
 		return view('users.create-user');
+	}
+
+	// Muestra la vista para editar
+	public function showEditUser(User $user)
+	{
+		return view('users.edit-user', compact('user'));
 	}
 
 	public function getAllUsers()
@@ -69,21 +76,28 @@ class UserController extends Controller
 		$user->save();
 		// La funcion all() devuelve todos los atributos del request.
 		if ($request->ajax()) return response()->json(['user' => $user], 201);
-		return back();
+		return back()->with('success', 'Usuario creado exitosamente.');   // El success está creado en alerts.blade.php
 	}
 
 	// Actualizando un Usuario.
 	// Se trae el usuario $user de la base de datos, y se trae la data del request
 	public function updateUser(User $user, UpdateUserRequest $request)
 	{
+		$allRequest = $request->all();
+		// Para validar la contraseña antes de actualizar  issets -> existe
+		if (isset($allRequest['password'])) {
+			if (!$allRequest['password']) unset($allRequest['password']);
+		}
 		$user->update($request->all()); // A este usuario se le actualiza toda la data enviada
-		return response()->json(['user' => $user->refresh()], 201); // refresh() refrescar data del usuario, ya que el metodo PUT no esta pensado para mostrar data.
+		if ($request->ajax()) return response()->json(['user' => $user->refresh()], 201); // refresh() refrescar data del usuario, ya que el metodo PUT no esta pensado para mostrar data.
+		return back()->with('success', 'Usuario editado satisfactoriamente.');
 	}
 
 	// Eliminando usuario
-	public function deleteUser(User $user)
+	public function deleteUser(User $user, Request $request)
 	{
 		$user->delete();
-		return response()->json([], 204); // 204 indica que se realizo la operacion con exito.
+		if ($request->ajax()) return response()->json([], 204); // 204 indica que se realizo la operacion con exito.
+		return back()->with('success', 'Usuario eliminado satisfactoriamente.');
 	}
 }

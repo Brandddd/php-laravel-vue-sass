@@ -68,7 +68,8 @@ class UserController extends Controller
 		// Con el metodo save() lo guardamos este $user nuevo en la base de datos.
 		$user->save();
 		// La funcion all() devuelve todos los atributos del request.
-		return response()->json(['user' => $user], 201);
+		if ($request->ajax()) return response()->json(['user' => $user], 201);
+		return back();
 	}
 
 	// Actualizando un Usuario.

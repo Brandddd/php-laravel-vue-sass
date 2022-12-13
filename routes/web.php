@@ -16,6 +16,7 @@ Route::get('/', [BookController::class, 'showHomeWithBooks'])->name('home');
 Route::group(['prefix' => 'Users', 'controller' => UserController::class], function () {
 	Route::get('/', 'showAllUsers')->name('users'); /* Nombre para llamarlo desde menu.blade.php */
 	Route::get('/CreateUser', 'showCreateUser')->name('user.create');
+	Route::post('/CreateUser', 'createUser')->name('user.create.post');
 });
 
 // Se crea el grupo de routes, el cual recibe un array de atributos, en este caso una clase controlador

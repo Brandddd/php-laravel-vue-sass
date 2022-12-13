@@ -5,10 +5,18 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\VerificationController;
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
+// Ruta para mostrar los libros desde el controlador de BookController
+Route::get('/', [BookController::class, 'showHomeWithBooks'])->name('home');
 
-Route::view('/', 'home');
+// Grupo para los usuarios:
+Route::group(['prefix' => 'Users', 'controller' => UserController::class], function () {
+	Route::get('/', 'showAllUsers')->name('users'); /* Nombre para llamarlo desde menu.blade.php */
+	Route::get('/CreateUser', 'showCreateUser')->name('user.create');
+});
 
 // Se crea el grupo de routes, el cual recibe un array de atributos, en este caso una clase controlador
 // y una función anónima, la cual va tener la rutas, que reciben el nombre $url, y a ese se le asigna el metodo
@@ -49,6 +57,3 @@ Route::group(['controller' => VerificationController::class], function () {
 	Route::get('email/verify/{id}/{hash}', 'verify')->name('verification.verify');
 	Route::post('email/resend', 'resend')->name('verification.resend');
 });
-
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

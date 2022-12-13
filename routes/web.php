@@ -23,6 +23,17 @@ Route::group(['prefix' => 'Users', 'controller' => UserController::class], funct
 	Route::delete('/DeleteUser/{user}', 'deleteUser')->name('user.delete');
 });
 
+// Grupo para los libros:
+Route::group(['prefix' => 'Books', 'controller' => BookController::class], function () {
+	Route::get('/', 'showBooks')->name('books'); /* Nombre para llamarlo desde menu.blade.php */
+	/* Route::get('/CreateUser', 'showCreateUser')->name('user.create'); */
+	// Recibe variable user, la cual corresponde al id del usuario que se desea editar
+	/* Route::get('/EditUser/{user}', 'showEditUser')->name('user.edit');
+	Route::post('/CreateUser', 'createUser')->name('user.create.post');
+	Route::put('/EditUser/{user}', 'updateUser')->name('user.edit.put');
+	Route::delete('/DeleteUser/{user}', 'deleteUser')->name('user.delete'); */
+});
+
 // Se crea el grupo de routes, el cual recibe un array de atributos, en este caso una clase controlador
 // y una función anónima, la cual va tener la rutas, que reciben el nombre $url, y a ese se le asigna el metodo
 // que se va usar desde el controlador. Tambien se le debe asignar el name(), el cual se llamará desde a app.blade.php para hacer el llamado a la ruta.

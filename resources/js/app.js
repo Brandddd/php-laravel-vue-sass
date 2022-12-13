@@ -3,10 +3,12 @@ import { createApp } from 'vue'
 
 // -------------------------- Componentes -------------------------
 import ExampleComponent from './components/ExampleComponent.vue' // Forma de importar componentes
+import BooksList from './components/Books/Index.vue'
 
 const app = createApp({
 	components: {
-		ExampleComponent
+		ExampleComponent,
+		BooksList
 	}
 })
 

@@ -5,11 +5,24 @@ namespace App\Http\Controllers;
 use App\Http\Requests\User\CreateUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
 
 // En los controladores va TODA la lógica
 class UserController extends Controller
 {
+
+	// Funcion que me retorna la vista del algoritmo de showAllUser
+	public function showAllUsers()
+	{
+		$users = $this->getAllUsers()->original['users'];
+		return view('users.index', compact('users'));
+	}
+
+	// Funcion que me retorna la vista del algoritmo de showcreateuser
+	public function showCreateUser()
+	{
+		return view('users.create-user');
+	}
+
 	public function getAllUsers()
 	{
 		// Consulta a la base de datos, en este caso, vamos a llamar al modelo User para traer a todos los usuarios.

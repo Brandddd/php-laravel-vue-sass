@@ -5,12 +5,26 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Book\CreateBookRequest;
 use App\Http\Requests\Book\UpdateBookRequest;
 use App\Models\Book;
-use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
+	// Mostrar home con libros
+	public function showHomeWithBooks()
+	{
+		// El return de getAllBooks queda en la variable $books
+		$books = $this->getAllBooks()->original['books'];  // Se obtuvo desde getAllBooks haciendo debugging
+		// Para mostrar una vista desde cualquier controlador, se retorna la función View, y su posicionamiento, en este caso Home:
+		return view('index', compact('books'));  // Compact sirve para pasar a la vista la variable que contiene todos los libros.
+	}
 
-	//Create
+	// Read
+	public function getAllBooks()
+	{
+		$books = Book::get();
+		return response()->json(['books' => $books], 200);
+	}
+
+	// Create
 	public function createBook(CreateBookRequest $request)
 	{
 		$book = new Book($request->all());
@@ -18,26 +32,19 @@ class BookController extends Controller
 		return response()->json(['book' => $book], 201);
 	}
 
-	//Read
-	public function getAllBooks()
-	{
-		$books = Book::get();
-		return response()->json(['books' => $books], 200);
-	}
-
 	public function getAnBook(Book $book)
 	{
 		return response()->json(['book' => $book], 200);
 	}
 
-	//update
+	// update
 	public function updateBook(Book $book, UpdateBookRequest $request)
 	{
 		$book->update($request->all());
 		return response()->json(['book' => $book->refresh()], 201);
 	}
 
-	//Delete
+	// Delete
 	public function deleteBook(Book $book)
 	{
 		$book->delete();

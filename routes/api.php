@@ -41,7 +41,8 @@ Route::group(['prefix' => 'Lends', 'controller' => LendController::class], funct
 // -------------------------------- Rutas para Book ----------------------------------------------
 Route::group(['prefix' => 'Books', 'controller' => BookController::class], function () {
 	Route::post('/CreateBook', 'createBook'); // Create
-	Route::get('/GetAllBooks', 'getAllBooks');  // Read all
+	Route::get('/GetAllBooks', 'getAllBooks')->name('books');  // Read all
+	// Route::get('/GetAllBooks', 'showBooks')->name('books');  // Read all con view
 	Route::get('/GetAnBook/{book}', 'getAnBook');  // Read 1
 	Route::put('/UpdateBook/{book}', 'updateBook'); // Update
 	Route::delete('/DeleteBook/{book}', 'deleteBook'); // Delete

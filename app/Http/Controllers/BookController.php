@@ -27,7 +27,7 @@ class BookController extends Controller
 	// Read
 	public function getAllBooks()
 	{
-		$books = Book::get();
+		$books = Book::with('Author')->get();
 		return response()->json(['books' => $books], 200);
 	}
 

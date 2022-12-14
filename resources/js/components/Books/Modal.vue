@@ -1,0 +1,152 @@
+<template>
+	<!-- Modal -->
+	<div class="modal fade" id="book_modal" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">
+						<!-- Si es creacion coloca crear, si es actualizar, coloca actualizar -->
+						<strong>{{ `${is_create ? 'Crear' : 'Actualizar'} libro` }}</strong>
+					</h5>
+					<button
+						type="button"
+						class="btn-close"
+						data-bs-dismiss="modal"
+						aria-label="Close"
+					></button>
+				</div>
+				<div class="modal-body">
+					<!-- Formulario para crear libro dentro del modal -->
+					<!-- Se debe llamar la funcion como submit.prevent de storeBook desde el form -->
+					<form @submit.prevent="storeBook">
+						<div class="mb-3">
+							<label for="title" class="form-label">Titulo</label>
+							<input
+								type="text"
+								class="form-control"
+								id="title"
+								v-model="book.title"
+							/>
+						</div>
+						<div class="mb-3">
+							<label for="stock" class="form-label">Stock</label>
+							<input
+								type="number"
+								class="form-control"
+								id="stock"
+								v-model="book.stock"
+							/>
+						</div>
+						<div class="mb-3">
+							<label for="description" class="form-label">Descripción</label>
+							<textarea
+								class="form-control"
+								id="description"
+								rows="3"
+								v-model="book.description"
+							></textarea>
+						</div>
+
+						<!-- Vue - select libreria -->
+
+						<div class="mb-3">
+							<label for="category" class="form-label">Categoría</label>
+							<v-select
+								id="category"
+								:options="categories"
+								v-model="book.category_id"
+								:reduce="category => category.id"
+								label="name"
+								:clearable="false"
+							></v-select>
+						</div>
+
+						<div class="mb-3">
+							<label for="author" class="form-label">Autor</label>
+							<v-select
+								id="author"
+								:options="authors"
+								v-model="book.author_id"
+								:reduce="author => author.id"
+								label="name"
+								:clearable="false"
+							></v-select>
+						</div>
+						<!-- Para hacer una linea -->
+						<hr />
+						<section class="d-flex justify-content-center">
+							<button
+								type="button"
+								class="btn btn-secondary mx-1"
+								data-bs-dismiss="modal"
+							>
+								Cerrar
+							</button>
+							<button type="submit" class="btn btn-primary mx-1">
+								<strong>{{ `${is_create ? 'Crear' : 'Actualizar'}` }}</strong>
+							</button>
+						</section>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+<script>
+export default {
+	data() {
+		return {
+			is_create: true,
+			categories: [],
+			authors: [],
+			book: {}
+		}
+	},
+	created() {
+		// Cuando se crea va al index
+		this.index()
+	},
+	methods: {
+		index() {
+			this.getCategories()
+			this.getAuthors()
+		},
+		async getCategories() {
+			const { data } = await axios.get('/api/Categories/GetAllCategories')
+			this.categories = data.categories
+		},
+		async getAuthors() {
+			const { data } = await axios.get('/api/Authors/GetAllAuthors')
+			this.authors = data.authors
+		},
+		async storeBook() {
+			try {
+				// Si es crear, me manda a crear, si no, me manda a update
+				if (this.is_create) {
+					// Para guardar el libro, le pasamos la dirección api, y el objeto que le vamos a mandar, en este caso this.book
+					await axios.post('api/Books/CreateBook', this.book)
+				} else {
+					await axios.put(`api/Books/UpdateBook/${this.book.id}`, this.book)
+				}
+				// Mensajes de error o success
+				swal.fire({
+					icon: 'success',
+					title: 'Felicidades!',
+					text: 'Libro almacenado.'
+				})
+				// Llamamos a la funcion desde el index, con el parent, como padre desde el hijo, con parent tambien podemos llamar a variables y otras cosas
+				this.$parent.closeModal()
+			} catch (error) {
+				console.error(error)
+				swal.fire({
+					icon: 'error',
+					title: 'Oops...',
+					text: 'Algo salió mal!'
+				})
+			}
+		}
+	}
+}
+</script>
+

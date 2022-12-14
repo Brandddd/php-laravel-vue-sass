@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LendController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -41,9 +43,17 @@ Route::group(['prefix' => 'Lends', 'controller' => LendController::class], funct
 // -------------------------------- Rutas para Book ----------------------------------------------
 Route::group(['prefix' => 'Books', 'controller' => BookController::class], function () {
 	Route::post('/CreateBook', 'createBook'); // Create
-	Route::get('/GetAllBooks', 'getAllBooks')->name('books');  // Read all
-	// Route::get('/GetAllBooks', 'showBooks')->name('books');  // Read all con view
+	Route::get('/GetAllBooks', 'getAllBooks');  // Read all
 	Route::get('/GetAnBook/{book}', 'getAnBook');  // Read 1
 	Route::put('/UpdateBook/{book}', 'updateBook'); // Update
 	Route::delete('/DeleteBook/{book}', 'deleteBook'); // Delete
+});
+// -------------------------------- Rutas para Authors ----------------------------------------------
+Route::group(['prefix' => 'Categories', 'controller' => CategoryController::class], function () {
+	Route::get('/GetAllCategories', 'getAllCategories');
+});
+
+// -------------------------------- Rutas para Categories ----------------------------------------------
+Route::group(['prefix' => 'Authors', 'controller' => AuthorController::class], function () {
+	Route::get('/GetAllAuthors', 'getAllAuthors');
 });

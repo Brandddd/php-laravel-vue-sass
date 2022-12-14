@@ -2,7 +2,7 @@
     <section class="container">
         <div class="card">
             <div class="card-header d-flex justify-content-between">
-                <h2><strong>Usuarios</strong></h2>
+                <h2><strong>Usuarios (Vistas hechas con Blade)</strong></h2>
                 <a href="{{ route('user.create') }}" class="btn btn-primary">Crear usuario</a>
             </div>
             <div class="card-body">

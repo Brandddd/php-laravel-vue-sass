@@ -32,6 +32,7 @@ Route::group(['prefix' => 'Books', 'controller' => BookController::class], funct
 	Route::get('/GetAllBooks', 'getAllBooks');  // Leer todos los libros desde el modal de vue
 	Route::get('/GetABook/{book}', 'getABook');  // Leer 1 libro para editarlo usando modal de vue
 	Route::put('/UpdateBook/{book}', 'updateBook'); // Actualizado libro usando Vue
+	Route::post('/UpdateBookFormData/{book}', 'updateBook'); // Actualizado libro usando Vue y formData DEBE SER POST
 	Route::delete('/DeleteBook/{book}', 'deleteBook'); // Borrar libro usando Vue
 });
 

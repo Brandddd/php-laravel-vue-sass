@@ -14,8 +14,8 @@
 				<td>{{ book.author.name }}</td>
 				<td>{{ book.stock }}</td>
 				<td>
-					<button class="btn btn-warning me-2">Editar</button>
-					<button class="btn btn-danger">Eliminar</button>
+					<button class="btn btn-warning me-2" @click="getBook(book.id)">Editar</button>
+					<button class="btn btn-danger" @click="deleteBook(book)">Eliminar</button>
 				</td>
 			</tr>
 		</tbody>
@@ -35,7 +35,42 @@ export default {
 	},
 	methods: {
 		index() {
-			this.books = {...this.books_data}
+			// copia identica en memoria ram del label que se esté editando
+			this.books = { ...this.books_data }
+		},
+		async getBook(book_id) {
+			try {
+				const { data } = await axios.get(`Books/GetABook/${book_id}`)
+				// Se lo pasamos al la funcion padre el libro para que lo rellene
+				this.$parent.editBook(data.book)
+			} catch (error) {
+				console.error(error)
+			}
+		},
+		async deleteBook(book) {
+			try {
+				// Alerta aviso
+				const result = await swal.fire({
+					icon: 'info',
+					title: '¿Seguro deseas borrar el libro?',
+					showCancelButton: true,
+					confirmButtonText: 'Eliminar'
+				})
+
+				if (!result.isConfirmed) return
+
+				// Direccion web
+				await axios.delete(`Books/DeleteBook/${book.id}`)
+				// Recargar pagina mostrando nuevamente todos los libros en la vista de vue.
+				this.$parent.getBooks()
+				swal.fire({
+					icon: 'success',
+					title: 'Felicidades!',
+					text: 'Libro eliminado exitosamente.'
+				})
+			} catch (error) {
+				console.error(error)
+			}
 		}
 	}
 }

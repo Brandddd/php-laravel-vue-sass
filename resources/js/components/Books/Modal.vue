@@ -95,6 +95,7 @@
 
 <script>
 export default {
+	props: ['book_data'],
 	data() {
 		return {
 			is_create: true,
@@ -111,23 +112,42 @@ export default {
 		index() {
 			this.getCategories()
 			this.getAuthors()
+			this.setBook()
+		},
+		setBook() {
+			if (!this.book_data) return
+			this.book = { ...this.book_data }
+			// Como estamos creando un libro, ponemos el is_Create en false, y asi se activa la condicion de actualizar o crear
+			this.is_create = false
 		},
 		async getCategories() {
-			const { data } = await axios.get('/api/Categories/GetAllCategories')
+			// Con rutas API se hace de esta forma:
+			// const { data } = await axios.get('/api/Categories/GetAllCategories')
+			// Con rutas WEB se hace de esta forma: (Previamente añadiendo el token crsf en bootstrap.js)
+			const { data } = await axios.get('Categories/GetAllCategories')
 			this.categories = data.categories
 		},
 		async getAuthors() {
-			const { data } = await axios.get('/api/Authors/GetAllAuthors')
+			// Rutas API:
+			// const { data } = await axios.get('/api/Authors/GetAllAuthors')
+			// Uso de rutas WEB:
+			const { data } = await axios.get('Authors/GetAllAuthors')
 			this.authors = data.authors
 		},
 		async storeBook() {
 			try {
 				// Si es crear, me manda a crear, si no, me manda a update
 				if (this.is_create) {
+					// API
 					// Para guardar el libro, le pasamos la dirección api, y el objeto que le vamos a mandar, en este caso this.book
-					await axios.post('api/Books/CreateBook', this.book)
+					// await axios.post('api/Books/CreateBook', this.book)
+					// WEB
+					await axios.post('Books/CreateBook', this.book)
 				} else {
-					await axios.put(`api/Books/UpdateBook/${this.book.id}`, this.book)
+					// API
+					// await axios.put(`api/Books/UpdateBook/${this.book.id}`, this.book)
+					// WEB:
+					await axios.put(`Books/UpdateBook/${this.book.id}`, this.book)
 				}
 				// Mensajes de error o success
 				swal.fire({

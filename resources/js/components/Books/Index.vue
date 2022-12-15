@@ -18,7 +18,8 @@
 			</section>
 		</div>
 		<section v-if="load_modal">
-			<modal />
+			<!-- Se lo enviamos al modal con un props de modal-->
+			<modal :book_data="book" />
 		</section>
 	</div>
 </template>
@@ -39,7 +40,8 @@ export default {
 			books: [],
 			load: false,
 			load_modal: false,
-			modal: null
+			modal: null,
+			book: null
 		}
 	},
 	created() {
@@ -56,7 +58,7 @@ export default {
 			try {
 				this.load = false
 				// Consumiento la api desde la api.php con axios para obtener el objeto books y mandandola como data
-				const { data } = await axios.get('/api/Books/GetAllBooks')
+				const { data } = await axios.get('Books/GetAllBooks')
 				this.books = data.books
 				this.load = true
 				// console.log(books)
@@ -81,6 +83,8 @@ export default {
 				// Evento de escucha que cuando se cierre ejecuta un callback, funcion que se ejecuta cuando se cierra un evento
 				modal.addEventListener('hidden.bs.modal', () => {
 					this.load_modal = false
+					// Se pone en null para que las variables se reinicien
+					this.book = null
 				})
 			}, 200)
 		},
@@ -90,6 +94,10 @@ export default {
 			this.modal.hide()
 			this.getBooks()
 			// Llamamos esta función en Modal.vue
+		},
+		editBook(book){
+			this.book = book
+			this.openModal()
 		}
 	}
 }

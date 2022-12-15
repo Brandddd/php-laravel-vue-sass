@@ -14,3 +14,9 @@ window.axios = axios
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 // Trayendolo para todo el proyecto.
 window.bootstrap = bootstrap
+// Para que axios lea las rutas web, se le debe pasar un token csrf solo se puede hacer en este proyecto
+const csrf_token = document.head.querySelector('meta[name="csrf-token"]')
+if (csrf_token) {
+	window.csrf_token = csrf_token.content
+	window.axios.defaults.headers.common['X-CSRF-TOKEN'] = window.csrf_token
+} else console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token')

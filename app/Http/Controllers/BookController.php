@@ -31,6 +31,12 @@ class BookController extends Controller
 		return response()->json(['books' => $books], 200);
 	}
 
+	public function getABook(Book $book)
+	{
+		$book->load('Author', 'Category');
+		return response()->json(['book' => $book], 200);
+	}
+
 	// Create
 	public function createBook(CreateBookRequest $request)
 	{
@@ -39,16 +45,13 @@ class BookController extends Controller
 		return response()->json(['book' => $book], 201);
 	}
 
-	public function getAnBook(Book $book)
-	{
-		return response()->json(['book' => $book], 200);
-	}
-
 	// update
 	public function updateBook(Book $book, UpdateBookRequest $request)
 	{
+		// update -> actualiza la rquest con all()
 		$book->update($request->all());
-		return response()->json(['book' => $book->refresh()], 201);
+		// Con el refresh mostramos el libro actualizado y con el load cargamos el author y la category para mostrarla
+		return response()->json(['book' => $book->refresh()->load('Author', 'Category')], 201);
 	}
 
 	// Delete

@@ -18,7 +18,18 @@
 				<div class="modal-body">
 					<!-- Formulario para crear libro dentro del modal -->
 					<!-- Se debe llamar la funcion como submit.prevent de storeBook desde el form -->
-					<form @submit.prevent="storeBook">
+					<form @submit.prevent="storeBook" enctype="multipart/form-data">
+						<!-- Encriptacion para el formulario enctype -->
+						<div class="mb-3">
+							<label for="images" class="form-label">Portada</label>
+							<input
+								type="file"
+								class="form-control"
+								id="file"
+								accept="image/*"
+								@change="loadImage"
+							/>
+						</div>
 						<div class="mb-3">
 							<label for="title" class="form-label">Titulo</label>
 							<input
@@ -101,7 +112,8 @@ export default {
 			is_create: true,
 			categories: [],
 			authors: [],
-			book: {}
+			book: {},
+			file: null
 		}
 	},
 	created() {
@@ -120,6 +132,27 @@ export default {
 			// Como estamos creando un libro, ponemos el is_Create en false, y asi se activa la condicion de actualizar o crear
 			this.is_create = false
 		},
+		loadImage(event) {
+			// Obtiene el target html y el file que esta dentro de ese HTML, 0 es donde viene el binario
+			this.file = event.target.files[0]
+		},
+		// Carga de la data del formulario con la imagen:
+		loadFormData() {
+			// El FormData es el tipo de formulario que sube archivos binarios al backend
+			const form_data = new FormData()
+			// Subir la imagen
+			// Si existe el archivo, manda la imagen al form_data
+			if (this.file) form_data.append('image', this.file, this.file.name)
+
+			// Para agregarle los campos al formData se usa append
+			form_data.append('title', this.book.title)
+			form_data.append('stock', this.book.stock)
+			form_data.append('description', this.book.description)
+			form_data.append('category_id', this.book.category_id)
+			form_data.append('author_id', this.book.author_id)
+			// Se retorna el form data
+			return form_data
+		},
 		async getCategories() {
 			// Con rutas API se hace de esta forma:
 			// const { data } = await axios.get('/api/Categories/GetAllCategories')
@@ -136,18 +169,20 @@ export default {
 		},
 		async storeBook() {
 			try {
+				// Acá se crea el book que se manda al backend
+				const book = this.loadFormData()
 				// Si es crear, me manda a crear, si no, me manda a update
 				if (this.is_create) {
 					// API
 					// Para guardar el libro, le pasamos la dirección api, y el objeto que le vamos a mandar, en este caso this.book
 					// await axios.post('api/Books/CreateBook', this.book)
 					// WEB
-					await axios.post('Books/CreateBook', this.book)
+					await axios.post('Books/CreateBook', book)
 				} else {
 					// API
 					// await axios.put(`api/Books/UpdateBook/${this.book.id}`, this.book)
 					// WEB:
-					await axios.put(`Books/UpdateBook/${this.book.id}`, this.book)
+					await axios.post(`Books/UpdateBookFormData/${this.book.id}`, book)
 				}
 				// Mensajes de error o success
 				swal.fire({

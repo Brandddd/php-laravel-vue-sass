@@ -16,7 +16,11 @@
     <section class="d-flex justify-content-center flex-wrap">
         @foreach ($books as $book)
             <div class="card my-2 mx-3" style="width: 18rem;">
-                <img src="https://api.lorem.space/image/game?w=150&h=220" class="card-img-top" alt="Libro">
+                @if ($book->image)
+                    <img src="/storage/images/{{$book->image}}" class="card-img-top" alt="Libro">
+                @else
+                    <img src="https://api.lorem.space/image/game?w=150&h=220" class="card-img-top" alt="Libro">
+                @endif
                 <div class="card-body">
                     <h5 class="card-title">{{ $book->title }}</h5>
                     <p class="card-text">{{ $book->description }}</p>

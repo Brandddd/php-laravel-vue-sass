@@ -44,7 +44,7 @@ Route::group(['prefix' => 'Lends', 'controller' => LendController::class], funct
 Route::group(['prefix' => 'Books', 'controller' => BookController::class], function () {
 	Route::post('/CreateBook', 'createBook'); // Create
 	Route::get('/GetAllBooks', 'getAllBooks');  // Read all
-	Route::get('/GetAnBook/{book}', 'getAnBook');  // Read 1
+	Route::get('/GetABook/{book}', 'getABook');  // Read 1
 	Route::put('/UpdateBook/{book}', 'updateBook'); // Update
 	Route::delete('/DeleteBook/{book}', 'deleteBook'); // Delete
 });

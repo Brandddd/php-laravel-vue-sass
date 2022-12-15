@@ -7,6 +7,8 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\AuthorController;
 use Illuminate\Support\Facades\Route;
 
 // Ruta para mostrar los libros desde el controlador de BookController
@@ -26,12 +28,21 @@ Route::group(['prefix' => 'Users', 'controller' => UserController::class], funct
 // Grupo para los libros:
 Route::group(['prefix' => 'Books', 'controller' => BookController::class], function () {
 	Route::get('/', 'showBooks')->name('books'); /* Nombre para llamarlo desde menu.blade.php */
-	/* Route::get('/CreateUser', 'showCreateUser')->name('user.create'); */
-	// Recibe variable user, la cual corresponde al id del usuario que se desea editar
-	/* Route::get('/EditUser/{user}', 'showEditUser')->name('user.edit');
-	Route::post('/CreateUser', 'createUser')->name('user.create.post');
-	Route::put('/EditUser/{user}', 'updateUser')->name('user.edit.put');
-	Route::delete('/DeleteUser/{user}', 'deleteUser')->name('user.delete'); */
+	Route::post('/CreateBook', 'createBook'); // Crear libro desde el modal de vue
+	Route::get('/GetAllBooks', 'getAllBooks');  // Leer todos los libros desde el modal de vue
+	Route::get('/GetABook/{book}', 'getABook');  // Leer 1 libro para editarlo usando modal de vue
+	Route::put('/UpdateBook/{book}', 'updateBook'); // Actualizado libro usando Vue
+	Route::delete('/DeleteBook/{book}', 'deleteBook'); // Borrar libro usando Vue
+});
+
+// -------------------------------- Rutas para Authors ----------------------------------------------
+Route::group(['prefix' => 'Categories', 'controller' => CategoryController::class], function () {
+	Route::get('/GetAllCategories', 'getAllCategories');
+});
+
+// -------------------------------- Rutas para Categories ----------------------------------------------
+Route::group(['prefix' => 'Authors', 'controller' => AuthorController::class], function () {
+	Route::get('/GetAllAuthors', 'getAllAuthors');
 });
 
 // Se crea el grupo de routes, el cual recibe un array de atributos, en este caso una clase controlador

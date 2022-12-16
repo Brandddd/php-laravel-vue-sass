@@ -40,15 +40,19 @@
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            {{-- Usuarios --}}
-                            <a class="dropdown-item" href="{{ route('users') }}">
-                                Usuarios
-                            </a>
 
-                            {{-- Libros --}}
-                            <a class="dropdown-item" href="{{ route('books') }}">
-                                Libros
-                            </a>
+                            {{-- Roles que podran ver el navbar, esto es de blade, para agregar otro role se pone @role('admin|user') --}}
+                            @role('admin')
+                                {{-- Usuarios --}}
+                                <a class="dropdown-item" href="{{ route('users') }}">
+                                    Usuarios
+                                </a>
+
+                                {{-- Libros --}}
+                                <a class="dropdown-item" href="{{ route('books') }}">
+                                    Libros
+                                </a>
+                            @endrole
 
                             {{-- Logout --}}
                             <a class="dropdown-item" href="{{ route('logout') }}"

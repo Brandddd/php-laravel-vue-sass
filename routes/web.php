@@ -9,13 +9,34 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AuthorController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use Spatie\Permission\Models\Role;
+
+// Ruta para los roles y probra codigo
+Route::get('/test', function () {
+	// 2. Asignar roles a los usuarios:
+	/* $users = User::get();
+	foreach ($users as $user) {
+		if ($user->number_id == 1088351988) $user->assignRole('admin');   // Asignacion admin role
+		else $user->assignRole('user');   // Asignacion user role
+	} */
+	// 1. Asi creamos los roles, se accede a la ruta y se crea el rol en base de datos
+	/* Role::create(['name' => 'admin']);
+	Role::create(['name' => 'user']); */
+});
 
 // Ruta para mostrar los libros desde el controlador de BookController
 Route::get('/', [BookController::class, 'showHomeWithBooks'])->name('home');
 
-// Grupo para los usuarios:
-Route::group(['prefix' => 'Users', 'controller' => UserController::class], function () {
+
+// ---------------------------------- Grupo para los usuarios: -------------------------------
+// El middleware sirve para crear las rutas protegidas, que solo accedan los autentificados
+// También se pueden agregar roles que puedan acceder a este grupo de rutas.
+Route::group([
+	'prefix' => 'Users', 'middleware' => ['auth', 'role:admin'],
+	'controller' => UserController::class
+], function () {
 	Route::get('/', 'showAllUsers')->name('users'); /* Nombre para llamarlo desde menu.blade.php */
 	Route::get('/CreateUser', 'showCreateUser')->name('user.create');
 	// Recibe variable user, la cual corresponde al id del usuario que se desea editar
@@ -25,8 +46,12 @@ Route::group(['prefix' => 'Users', 'controller' => UserController::class], funct
 	Route::delete('/DeleteUser/{user}', 'deleteUser')->name('user.delete');
 });
 
-// Grupo para los libros:
-Route::group(['prefix' => 'Books', 'controller' => BookController::class], function () {
+//--------------------------------- Grupo para los libros: -----------------------------------------
+Route::group([
+	'prefix' => 'Books', 'middleware' => ['auth', 'role:admin'],
+	'controller' => BookController::class
+], function () {
+	// Este es el del home
 	Route::get('/', 'showBooks')->name('books'); /* Nombre para llamarlo desde menu.blade.php */
 	Route::post('/CreateBook', 'createBook'); // Crear libro desde el modal de vue
 	Route::get('/GetAllBooks', 'getAllBooks');  // Leer todos los libros desde el modal de vue

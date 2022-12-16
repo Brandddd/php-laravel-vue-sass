@@ -13,8 +13,10 @@ use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models\Role;
 
-// Ruta para los roles y probra codigo
+// Ruta para el testeo de scripts por la ruta web
 Route::get('/test', function () {
+	// Retornar todos los roles
+	// return Role::all()->pluck('name');
 	// 2. Asignar roles a los usuarios:
 	/* $users = User::get();
 	foreach ($users as $user) {

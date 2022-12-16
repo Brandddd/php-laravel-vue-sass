@@ -10,7 +10,7 @@
 				{{-- Desde web.php se crea la ruta, se le asigna el nombre y se pone dentro de route --}}
 				<form action="{{route("user.create.post")}}" method="POST">
 					@csrf
-					<x-user.form-user/>
+					<x-user.form-user :roles="$roles"/>
 				</form>
 			</div>
 		</div>

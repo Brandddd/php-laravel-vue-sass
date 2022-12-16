@@ -30,6 +30,7 @@ class CreateUserRequest extends FormRequest
 			'email' => ['required', 'email', 'unique:users,email'],
 			// Para el password, minimo de caracteres de 8, y debe ser un password confirmado.
 			'password' => ['required', 'string', 'min:8','confirmed'],
+			'role' => ['required'],
         ];
     }
 
@@ -56,6 +57,7 @@ class CreateUserRequest extends FormRequest
 			'password.min' => 'La contraseña es muy corta.',
 			'password.confirmed' => 'Las contraseñas no coinciden.',
 
+			'role.required' => 'El role del usuario es requerido.'
 		];
 	}
 }

@@ -23,6 +23,7 @@ class UpdateUserRequest extends FormRequest
 			'email' => ['required', 'email', "unique:users,email,{$this->user->id}"],
 			// El nullable quiere decir que puede ser tomado o no.
 			'password' => ['nullable', 'string', 'min:8', 'confirmed'],
+			'role' => ['required'],
 		];
 	}
 
@@ -49,6 +50,7 @@ class UpdateUserRequest extends FormRequest
 			'password.min' => 'La contraseña es muy corta.',
 			'password.confirmed' => 'Las contraseñas no coinciden.',
 
+			'role.required' => 'El rol del usuario es requerido'
 		];
 	}
 }

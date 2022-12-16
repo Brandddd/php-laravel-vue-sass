@@ -1,9 +1,26 @@
+ {{-- Roles --}}
+ <div class="mb-3">
+     <label for="role" class="form-label">Role</label>
+     <select name="role" id="role" class="form-control">
+         {{-- Mostrar todos los roles como opciones --}}
+         @foreach ($roles as $role)
+             <option value="{{ $role }}">
+                 {{ $role }}</option>
+         @endforeach
+     </select>
+     {{-- Funcion de blade que lee los errores que le pertenecen al role --}}
+     @error('role')
+         <span class="invalid-feedback" role="alert">
+             <strong>{{ $message }}</strong>
+         </span>
+     @enderror
+ </div>
  {{-- Name --}}
  <div class="mb-3">
      <label for="name" class="form-label">Nombre</label>
      <input type="text" name="name" class="form-control
-		@error('name') is-invalid @enderror" {{-- Para evitar que me borre los campos si hay un error: Si existe 'name' entonces deja 'name' sino lo deja vacio '' --}}
-         value="{{ old('name') ? old('name') : (isset($user) ? $user->name : '') }}">
+		@error('name') is-invalid @enderror"
+         {{-- Para evitar que me borre los campos si hay un error: Si existe 'name' entonces deja 'name' sino lo deja vacio '' --}} value="{{ old('name') ? old('name') : (isset($user) ? $user->name : '') }}">
      {{-- Funcion de blade que lee los errores que le pertenecen al name --}}
      @error('name')
          <span class="invalid-feedback" role="alert">
@@ -27,7 +44,7 @@
  <div class="mb-3">
      <label for="name" class="form-label">Cedula</label>
      <input type="number" name="number_id" class="form-control @error('number_id') is-invalid @enderror"
-	 value="{{ old('number_id') ? old('number_id') : (isset($user) ? $user->number_id : '') }}">
+         value="{{ old('number_id') ? old('number_id') : (isset($user) ? $user->number_id : '') }}">
      {{-- Funcion de blade que lee los errores que le pertenecen al name --}}
      @error('number_id')
          <span class="invalid-feedback" role="alert">
@@ -39,7 +56,7 @@
  <div class="mb-3">
      <label for="name" class="form-label">Correo</label>
      <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
-	 value="{{ old('email') ? old('email') : (isset($user) ? $user->email : '') }}">
+         value="{{ old('email') ? old('email') : (isset($user) ? $user->email : '') }}">
      {{-- Funcion de blade que lee los errores que le pertenecen al name --}}
      @error('email')
          <span class="invalid-feedback" role="alert">

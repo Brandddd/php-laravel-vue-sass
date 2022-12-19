@@ -1,5 +1,6 @@
 <template>
-	<table class="table">
+	<!-- Se le da id a la tabla para asignar el datatable -->
+	<table class="table" id="bookTable">
 		<thead>
 			<tr>
 				<th>Titulo</th>
@@ -32,6 +33,11 @@ export default {
 	},
 	created() {
 		this.index()
+	},
+	// Cuando ya este montado el componente lo cargue con jquery y datatables
+	mounted() {
+		//
+		$('#bookTable').DataTable()
 	},
 	methods: {
 		index() {

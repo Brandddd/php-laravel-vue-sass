@@ -3,6 +3,10 @@ import axios from 'axios'
 import * as bootstrap from 'bootstrap'
 import swal from 'sweetalert2'
 
+import jquery from 'jquery'
+// Para el datatable solo se importa generalmente, sin hacer un llamado
+import 'datatables.net-bs5'
+
 // Con el window, las importaciones quedan globales para todo el aplicativo
 // Procesamiento de array y objetos ver documentacion de lodash, solo con llamar _ en cualquier parte se trae lodash
 window._ = _
@@ -14,6 +18,9 @@ window.axios = axios
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 // Trayendolo para todo el proyecto.
 window.bootstrap = bootstrap
+// Importamos jquery para todo el proyecto
+window.$ = jquery
+//
 // Para que axios lea las rutas web, se le debe pasar un token csrf solo se puede hacer en este proyecto
 const csrf_token = document.head.querySelector('meta[name="csrf-token"]')
 if (csrf_token) {

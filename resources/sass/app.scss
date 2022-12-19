@@ -10,3 +10,6 @@
 
 // vue-select
 @import 'vue-select/dist/vue-select.css';
+
+// Se importa el datatable desde node modules para css: (En vite.config.js se pueden observar los prefijos)
+@import '~/datatables.net-bs5/css/dataTables.bootstrap5.min';
